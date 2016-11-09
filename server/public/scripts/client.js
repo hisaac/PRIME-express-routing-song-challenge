@@ -9,23 +9,22 @@ $(document).ready(function() {
       newSong[field.name] = field.value;
     });
 
-    console.log(newSong);
-
     // send song object to the Server
     $.ajax({
       type: 'POST',
       url: '/songs',
       data: newSong,
       success: function(response) {
-        console.log(response);
         if(response == "Created") {
           getSongs();
         } else {
           alert("Oh no! Your song didn't save correctly.");
         }
+      },
+      error: function() {
+        alert('You are the weakest link. Goodbye!');
       }
     })
-
   })
 
   getSongs();
@@ -48,10 +47,7 @@ $(document).ready(function() {
       var $el = $("#songContainer").children().last();
       $el.append('<h3>' + songs[i].title + '</h3>');
       $el.append('<p>By: ' + songs[i].artist + '</p>');
+      $el.append('<p>Date added: ' + songs[i].date + '</p>');
     }
-
   }
-
-
-
 });
